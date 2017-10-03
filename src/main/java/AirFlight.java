@@ -28,6 +28,7 @@ public class AirFlight {
                         OutputCollector<Text, IntWritable> output,
                         Reporter reporter) throws IOException{
 
+
             String line = value.toString();
             //splite one satance to words..
             StringTokenizer tokenizer = new StringTokenizer(line);
