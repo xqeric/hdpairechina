@@ -10,19 +10,11 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 
-import org.apache.avro.Schema;
-import org.apache.avro.io.*;
-import org.apache.avro.specific.SpecificDatumReader;
+
 import org.apache.commons.codec.BinaryDecoder;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Writable;
-
-
-import org.apache.avro.specific.SpecificDatumWriter;
-
-import org.apache.avro.mapred.AvroMapper;
-import org.apache.avro.mapred.Pair;
 
 /**
  * the purpose of this class is that to parse the
@@ -81,37 +73,7 @@ public class FlightDataParse {
 
     }
 
-    public static String serializeFlightData(FlightData flightData) throws IOException {
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Encoder encoder = EncoderFactory.get().binaryEncoder(out,null );
-
-        SpecificDatumWriter<FlightData> datumWriter =
-                new SpecificDatumWriter<FlightData>(FlightData.getClassSchema());
-
-        datumWriter.write(flightData, encoder);
-        encoder.flush();
-        ByteBuffer serialized = ByteBuffer.allocate(out.toByteArray().length);
-
-
-        serialized.put(out.toByteArray());
-
-        return serialized.toString();
-
-
-    }
-
-    public static FlightData deserializeFlightData(String data) throws IOException {
-
-        byte[] bytes = data.getBytes();
-        SpecificDatumReader<FlightData> reader =
-                new SpecificDatumReader<FlightData>(FlightData.SCHEMA$);
-        Decoder decoder = DecoderFactory.get().binaryDecoder(bytes, null);
-        FlightData flightData = reader.read(null, decoder);
-
-
-        return flightData;
-    }
 
 }
 
